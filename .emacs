@@ -23,4 +23,6 @@
             (concat (file-name-as-directory lean-rootdir)
                     "share/emacs/site-lisp/lean"))
 (add-to-list 'load-path (expand-file-name lean-emacs-path))
-(require 'lean-mode)
+; Only load lean-mode if lean-emacs-path exists
+(when (file-directory-p lean-emacs-path)
+      (require 'lean-mode))
