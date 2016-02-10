@@ -6,16 +6,27 @@
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
 (package-initialize)
 
-;; Install packages for lean-mode
-(defvar lean-mode-required-packages
-  '(company dash dash-functional flycheck f fill-column-indicator s lua-mode mmm-mode))
-(let ((need-to-refresh t))
-  (dolist (p lean-mode-required-packages)
+(defvar prelude-packages
+  '(company dash dash-functional flycheck f fill-column-indicator s lua-mode mmm-mode ; for lean-mode
+            evil)
+  "Packages installed at launch.")
+
+(defun prelude-packages-installed-p ()
+  (loop for p in prelude-packages
+        when (not (package-installed-p p)) do (return nil)
+        finally (return t)))
+
+;; Check for new package versions
+(unless (prelude-packages-installed-p)
+  (message "%s" "Emacs Prelude is now refreshing its package database...")
+  (package-refresh-contents)
+  (message "%s" " done.")
+  ;; install the missing packages
+  (dolist (p prelude-packages)
     (when (not (package-installed-p p))
-      (when need-to-refresh
-        (package-refresh-contents)
-        (setq need-to-refresh nil))
       (package-install p))))
+
+(provide 'prelude-packages)
 
 ;; Set up lean-mode
 (setq lean-rootdir "/usr/local")
@@ -26,3 +37,7 @@
 ; Only load lean-mode if lean-emacs-path exists
 (when (file-directory-p lean-emacs-path)
       (require 'lean-mode))
+
+;; Set up evil
+(require 'evil)
+(evil-mode 1)
