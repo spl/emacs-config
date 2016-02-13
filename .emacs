@@ -1,6 +1,9 @@
 ;; Show line numbers
 (global-linenum-mode t)
 
+;; Disable line wrapping
+(set-default 'truncate-lines t)
+
 ;; Set up package
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
