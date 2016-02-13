@@ -1,6 +1,3 @@
-;; Show line numbers
-(global-linenum-mode t)
-
 ;; Disable line wrapping
 (set-default 'truncate-lines t)
 
