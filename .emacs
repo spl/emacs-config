@@ -1,3 +1,6 @@
+;; Show line numbers
+(global-linenum-mode t)
+
 ;; Set up package
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
